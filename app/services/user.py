@@ -18,3 +18,11 @@ def get_user_by_email(session, email):
         return user
     else:
         return None
+
+
+def get_user_by_tg(session, tg_id):
+    user = session.query(User).filter(User.tg_id == tg_id).first()
+    if user:
+        return user
+    else:
+        return None

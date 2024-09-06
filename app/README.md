@@ -18,10 +18,6 @@
 |   ├── user.py
 |   ├── data.py
 |   └── ml.py
-!├── workers
-!|   ├── prompt_worker.py
-!|   ├── db_worker.py
-!|   ├── content_worker.py
 ├── app.py
 ├── config.py
 

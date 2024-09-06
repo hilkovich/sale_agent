@@ -1,7 +1,6 @@
-def load_model():
-    pass
-
-
-def response(model, data):
-    output = model.predict(data)
+def response(data, model=None):
+    if model is None:
+        output = "Я пока не очень умный, но очень скоро смогу разговаривать"
+    else:
+        output = model.process(data)
     return output
