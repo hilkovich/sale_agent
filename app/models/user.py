@@ -9,4 +9,4 @@ class User(Base):
     email = Column(String)
     name = Column(String)
     company_name = Column(String)
-    tg_id = Column(String)
+    tg_id = Column(Integer)

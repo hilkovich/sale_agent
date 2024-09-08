@@ -15,7 +15,7 @@ dp = Dispatcher()
 
 async def start():
     try:
-        await db_init()
+        db_init()
         logger.info("DB initialize completed")
         await set_commands(bot)
         logger.info("bot commands set")

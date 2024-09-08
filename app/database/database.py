@@ -11,9 +11,11 @@ url = DB_Settings.DATABASE_URL
 engine = create_engine(url)
 SessionLocal = sessionmaker(autoflush=False, bind=engine)
 
+
 def get_db():
     with SessionLocal() as session:
-        yield session
+        return session
+
 
 def db_init():
     Base.metadata.create_all(bind=engine)

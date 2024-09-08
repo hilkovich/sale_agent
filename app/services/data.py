@@ -11,6 +11,7 @@ def save_input_data(tg_id, input_data: str, session):
     )
     session.add(data_add)
     session.commit()
+    session.close()
     return data_add.id
 
 
@@ -18,3 +19,4 @@ def save_output_data(session, output_data, data_id, tg_id):
     data = session.query(Data).filter(Data.user_id == tg_id, Data.id == data_id).first()
     data.output_data = output_data
     session.commit()
+    session.close()

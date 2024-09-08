@@ -10,10 +10,12 @@ def user_add(session, user_data):
     )
     session.add(user)
     session.commit()
+    session.close()
 
 
 def get_user_by_email(session, email):
     user = session.query(User).filter(User.email == email).first()
+    session.close()
     if user:
         return user
     else:
@@ -22,6 +24,7 @@ def get_user_by_email(session, email):
 
 def get_user_by_tg(session, tg_id):
     user = session.query(User).filter(User.tg_id == tg_id).first()
+    session.close()
     if user:
         return user
     else:
