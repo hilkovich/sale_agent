@@ -3,4 +3,5 @@
 out
 gen
 /.venv/
-.env.example
+.env
+/data/
