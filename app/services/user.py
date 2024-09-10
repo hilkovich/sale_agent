@@ -1,28 +1,17 @@
 from models.user import User
+import datetime
 
 
-def user_add(session, user_data):
+def user_add(session, tg_id: int):
     user = User(
-        email=user_data.email,
-        name=user_data.name,
-        company_name=user_data.company_name,
-        tg_id=user_data.tg_id,
+        tg_id=tg_id, created_on=datetime.datetime.now().strftime("%Y.%m.%d %H:%M:%S")
     )
     session.add(user)
     session.commit()
     session.close()
 
 
-def get_user_by_email(session, email):
-    user = session.query(User).filter(User.email == email).first()
-    session.close()
-    if user:
-        return user
-    else:
-        return None
-
-
-def get_user_by_tg(session, tg_id):
+def get_user_by_tg(session, tg_id: int):
     user = session.query(User).filter(User.tg_id == tg_id).first()
     session.close()
     if user:

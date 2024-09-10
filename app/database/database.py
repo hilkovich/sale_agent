@@ -4,6 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from models.base import Base
 from models.user import User
 from models.data import Data
+from models.analytics import Analytics
 from config import DB_Settings
 
 

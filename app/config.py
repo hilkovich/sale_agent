@@ -10,3 +10,8 @@ class DB_Settings:
 
 class TG_Settings:
     TG_BOT_TOKEN: str = os.getenv("TG_BOT_TOKEN")
+
+
+class GPT_Settings:
+    YANDEX_KATALOG_ID: str = os.getenv("YANDEX_KATALOG_ID")
+    YANDEX_API_KEY: str = os.getenv("YANDEX_API_KEY")
