@@ -18,10 +18,7 @@ async def request_generate(message: Message, state: FSMContext):
     tg_id = message.from_user.id
     user = get_user_by_tg(session, tg_id)
     data_id = save_input_data(user.id, user_text, session)
-    answer = response(
-        data=user_text
-    )  # в функции response() прописать обращение к модели для генерации ответа
+    answer = response(data=user_text)
 
     save_output_data(session, answer, data_id, user.id)
     await message.answer(answer)
-    # await state.clear() # для очистки состояния раскомментировать

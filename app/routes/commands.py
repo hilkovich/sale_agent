@@ -45,15 +45,6 @@ async def cmd_bot(message: Message, state: FSMContext):
     await state.set_state(ProcessLLMStates.waitForText)
 
 
-# @router.message(Command("help"))
-# async def cmd_help(message: Message):
-#     user = get_user_by_tg(session, message.from_user.id)
-#     if user is None:
-#         user_add(session, message.from_user.id)
-#     msg = "Раздел помощи с приложением\n" "А это помощь"
-#     await message.answer(msg)
-
-
 @router.message(Command("call"))
 async def cmd_call(message: Message):
     user = get_user_by_tg(session, message.from_user.id)
