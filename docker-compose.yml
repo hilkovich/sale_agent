@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  app:
+    container_name: sales_agent
+    build: 
+      context: .   
+      dockerfile: ./app/Dockerfile
+    image: event-planner-api:latest
+    env_file: 
+      - .env
+    volumes:
+      - ./app:/app
+    command: python app.py
+    restart: always
+    depends_on:
+      database:
+        condition: service_started
+
+  database:
+    container_name: database
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+    image: postgres:16.2-alpine
+    restart: always
+
+networks:
+  default:
+    driver: bridge
