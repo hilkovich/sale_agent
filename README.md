@@ -21,6 +21,11 @@
 ### Посмотрим историю миграций 
 `alembic history `
 
+## Скрипты
+## добавить отзывы
+
+`docker-compose run web python app/util/reviews_loader.py`
+
 
 ## Объктная модель (сущности)
 

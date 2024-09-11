@@ -9,6 +9,7 @@ import enum
 class SentimentEnum(enum.Enum):
     Positive = "Positive"
     Negative = "Negative"
+    Neutral = "Neutral"
 
 
 # Промежуточная таблица для связи отзывов и топиков

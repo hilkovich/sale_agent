@@ -1,6 +1,8 @@
-fastapi
+fastapi~=0.103.0
 uvicorn
-sqlalchemy
-alembic
+sqlalchemy~=2.0.34
+alembic~=1.13.2
 psycopg2-binary
 sqlalchemy_schemadisplay
+pydantic~=2.8.2
+requests~=2.32.3

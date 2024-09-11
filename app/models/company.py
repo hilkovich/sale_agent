@@ -12,3 +12,4 @@ class Company(Base):
 
     # Связь с продуктами
     products = relationship("Product", back_populates="company")
+    reviews = relationship("Review", back_populates="company")
