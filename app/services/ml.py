@@ -10,7 +10,7 @@ YANDEX_API_KEY = GPT_Settings.YANDEX_API_KEY
 def response(data: str):
     prompt = {
         "modelUri": f"gpt://{YANDEX_CATALOG_ID}/yandexgpt-lite/latest",
-        "completionOptions": {"stream": False, "temperature": 0.5, "maxTokens": "100"},
+        "completionOptions": {"stream": False, "temperature": 0.3, "maxTokens": "100"},
         "messages": [
             {
                 "role": "system",
