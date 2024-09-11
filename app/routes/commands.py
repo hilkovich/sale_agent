@@ -16,6 +16,24 @@ async def cmd_start(message: Message, state: FSMContext):
     user = get_user_by_tg(session, message.from_user.id)
     if user is None:
         user_add(session, message.from_user.id)
-    msg = "Добрый день 👋\n" "Что бы Вы хотели узнать про Вашу компанию?"
+    msg = "Что бы Вы хотели узнать?"
     await message.answer(msg)
     await state.set_state(ProcessLLMStates.waitForText)
+
+
+@router.message(Command("help"))
+async def cmd_help(message: Message):
+    user = get_user_by_tg(session, message.from_user.id)
+    if user is None:
+        user_add(session, message.from_user.id)
+    msg = "Раздел помощи с приложением\n" "А это помощь"
+    await message.answer(msg)
+
+
+@router.message(Command("call"))
+async def cmd_call(message: Message):
+    user = get_user_by_tg(session, message.from_user.id)
+    if user is None:
+        user_add(session, message.from_user.id)
+    msg = "Для связи с менеджером пройдите по ссылке\n" "Ссылка для связи"
+    await message.answer(msg)

@@ -20,9 +20,9 @@ async def start():
         await set_commands(bot)
         logger.info("bot commands set")
         await dp.start_polling(bot, skip_updates=True)
-        logger.info("bot started")
     finally:
         await bot.session.close()
+        logger.info("bot stopped")
 
 
 dp.include_router(commands.router)
