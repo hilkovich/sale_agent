@@ -3,4 +3,7 @@
 out
 gen
 /.venv/
-.env.example
+.env
+/data/
+*.json
+/review_embeddings.json
