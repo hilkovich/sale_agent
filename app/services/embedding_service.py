@@ -8,6 +8,11 @@ class EmbeddingService:
         """Инициализация сервиса для векторизации с использованием Yandex GPT Embeddings."""
         self.embedding_model = YandexGPTEmbeddings(api_key=api_key, folder_id=folder_id)
 
+    def get_query_embedding(self, query: str):
+        """Получаем эмбеддинг для запроса."""
+        query_embedding = self.embedding_model.embed_query(query)
+        return query_embedding
+
     def vectorize_reviews(self, session: Session):
         """Векторизация всех отзывов."""
         reviews = get_reviews_for_embedding(session)

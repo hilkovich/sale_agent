@@ -6,7 +6,7 @@ from chromadb import PersistentClient
 
 
 class ChromaService:
-    def __init__(self, collection_name: str, chroma_db_path: str = "/app/data/chroma_data"):
+    def __init__(self, collection_name: str, chroma_db_path: str = "/app/data/chroma_data"): #FixMe
         """Инициализация Chroma клиента с персистентностью"""
         settings = Settings(persist_directory=chroma_db_path, is_persistent=True)
         self.client = PersistentClient(path=chroma_db_path, settings=settings)
@@ -36,7 +36,48 @@ class ChromaService:
 
     def query_embeddings(self, query_embedding: List[float], n_results: int = 5):
         """Поиск похожих эмбеддингов в Chroma."""
-        return self.collection.query(
+
+        results = self.collection.query(
             query_embeddings=[query_embedding],
-            n_results=n_results
+            n_results=n_results,
+            include=["documents", "embeddings", "metadatas", "distances"]
         )
+
+        return results
+
+    def check_collection(self, n_results=3):
+        """Проверка, создалась ли коллекция и записаны ли эмбеддинги."""
+        try:
+
+            # Проверяем количество записей в коллекции
+            embeddings_count = self.collection.count()
+            print(f"Количество эмбеддингов в коллекции 'reviews_collection': {embeddings_count}")
+
+            if embeddings_count > 0:
+                # Создаём фиктивный запрос, чтобы получить любые первые результаты
+                fake_query_embedding = [0] * 256
+
+                # Получаем первые n_results эмбеддингов на основе фиктивного запроса
+                results = self.collection.query(
+                    query_embeddings=[fake_query_embedding],
+                    n_results=n_results,
+                    include=["documents", "embeddings", "metadatas", "distances"]
+                )
+
+                # Проверяем, что результат содержит данные
+                if results and 'documents' in results and len(results['documents']) > 0:
+                    print("Первые эмбеддинги в коллекции:")
+                    for i in range(len(results['documents'])):
+                        print(
+                            f"Эмбеддинг {i + 1}:\nДокумент: {results['documents'][i]}\nМетаданные: {results['metadatas'][i]}\nЭмбеддинг: {results['embeddings'][i]}\n"
+                        )
+                else:
+                    print("Не удалось получить результаты из коллекции.")
+
+                return results
+
+            else:
+                print("Коллекция пуста.")
+
+        except Exception as e:
+            print(f"Ошибка при проверке коллекции: {e}")

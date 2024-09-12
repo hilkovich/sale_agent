@@ -50,7 +50,7 @@ def load_reviews_from_csv(csv_file):
 
             # Создание отзыва
             review = Review(
-                text=row['Review Text'],
+                text=row['Review'],
                 review_date=row['Review Date'],
                 product_id=product.id,
                 sentiment=row['Sentiment'],

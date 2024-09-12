@@ -1,30 +1,6 @@
 import chromadb
 from app.services.chroma_service import ChromaService
 
-
-
-
-
-# Инициализация клиента Chroma
-# client = chromadb.Client()
-# # Получаем список всех коллекций
-# collections = client.list_collections()
-# print("Доступные коллекции:")
-# for collection in collections:
-#     print(collection.name)
-
-# Получаем коллекцию, с которой хотим работать
-# collection = client.get_collection("reviews_collection")
-
-# # Получаем все документы из коллекции
-# all_documents = collection.get()
-# print("\nДокументы в коллекции 'reviews_collection':")
-# for i, doc in enumerate(all_documents['documents']):
-#     print(f"Документ {i + 1}:")
-#     print(f"Текст: {doc}")
-#     print(f"Метаданные: {all_documents['metadatas'][i]}")
-
-
 # Инициализация Chroma сервиса
 chroma_service = ChromaService(collection_name="reviews_collection")
 

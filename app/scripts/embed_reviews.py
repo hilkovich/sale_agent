@@ -35,7 +35,7 @@ def vectorize_reviews(session, n_results=3):
     """Векторизация всех отзывов и сохранение в файл."""
 
     # Получаем отзывы для векторизации
-    reviews = get_reviews_for_embedding(session)[:n_results]
+    reviews = get_reviews_for_embedding(session)
     review_texts = [review['combined_text'] for review in reviews]
     metadata = [review['metadata'] for review in reviews]
     review_ids = [str(review['id']) for review in reviews]
