@@ -6,3 +6,10 @@ psycopg2-binary
 sqlalchemy_schemadisplay
 pydantic~=2.8.2
 requests~=2.32.3
+openai
+python-dotenv
+chromadb
+langchain-chroma
+langchain-community
+langchain[all]
+yandexcloud

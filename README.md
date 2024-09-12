@@ -21,10 +21,16 @@
 ### Посмотрим историю миграций 
 `alembic history `
 
-## Скрипты
-## добавить отзывы
-
+## Скрипты с отзывами
+### добавить отзывы
 `docker-compose run web python app/util/reviews_loader.py`
+
+### векторизуем отзывы сохраняем в хрому
+`run web python app/util/embed_reviews.py`
+
+### проверяем добавленные вектора
+`run web python app/util/show_data_in_chroma.py`
+
 
 
 ## Объктная модель (сущности)

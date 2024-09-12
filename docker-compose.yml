@@ -17,7 +17,7 @@ services:
   web:
     build: .
     container_name: fastapi_app
-    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     volumes:
       - .:/app
     ports:
@@ -40,8 +40,20 @@ services:
     networks:
       - app_network
 
+  chroma:
+    image: chromadb/chroma:latest
+    container_name: chromadb
+    ports:
+      - "8001:8001"
+    networks:
+      - app_network
+    volumes:
+      - chroma_data:/var/lib/chroma
+
+
 volumes:
   postgres_data:
+  chroma_data:
 
 networks:
   app_network:

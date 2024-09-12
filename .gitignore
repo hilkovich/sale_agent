@@ -5,3 +5,5 @@ gen
 /.venv/
 .env
 /data/
+*.json
+/review_embeddings.json
