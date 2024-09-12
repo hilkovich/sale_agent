@@ -1,9 +1,9 @@
 from sqlalchemy.orm import Session
-from app.models.review import Review, SentimentEnum
-from app.models.topic import Topic
-from app.models.product import Product
-from app.models.company import Company
-from app.models.marketplace import Marketplace
+from models.review import Review, SentimentEnum
+from models.topic import Topic
+from models.product import Product
+from models.company import Company
+from models.marketplace import Marketplace
 
 
 def get_reviews_for_embedding(session):

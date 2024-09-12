@@ -1,5 +1,5 @@
 from langchain_community.embeddings.yandex import YandexGPTEmbeddings
-from app.services.review_service import get_reviews_for_embedding
+from services.review_service import get_reviews_for_embedding
 from sqlalchemy.orm import Session
 
 

@@ -1,4 +1,4 @@
-from app.models import Product, ProductCategory,Review, Topic, Company, Marketplace, review_topic_table
+from models import Product, ProductCategory,Review, Topic, Company, Marketplace, review_topic_table
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 import csv

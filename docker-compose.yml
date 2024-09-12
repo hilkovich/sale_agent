@@ -14,19 +14,23 @@ services:
     networks:
       - app_network
 
-  web:
-    build: .
-    container_name: fastapi_app
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+  app:
+    container_name: sales_agent
+    build:
+      context: .
+    image: event-planner-api:latest
+    env_file:
+      - .env
     volumes:
+#      - ./app:/app
       - .:/app
-    ports:
-      - "8000:8000"
+    command: python app/app.py
+    restart: always
     depends_on:
       - db
     environment:
       DATABASE_URL: ${DATABASE_URL}
-      PYTHONPATH: /app
+#      PYTHONPATH: /app
     networks:
       - app_network
 

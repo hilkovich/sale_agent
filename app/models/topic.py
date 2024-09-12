@@ -1,8 +1,8 @@
 from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
-from app.models.base import Base
+from models.base import Base
 from datetime import datetime
-from app.models.review import review_topic_table
+from models.review import review_topic_table
 
 
 # Модель для тем (топиков) отзывов

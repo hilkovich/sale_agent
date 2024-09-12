@@ -2,10 +2,10 @@ import os
 import json
 from dotenv import load_dotenv
 from langchain_community.embeddings.yandex import YandexGPTEmbeddings
-from app.services.review_service import get_reviews_for_embedding
+from services.review_service import get_reviews_for_embedding
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
-from app.services.chroma_service import ChromaService
+from services.chroma_service import ChromaService
 
 # Загрузка переменных окружения
 load_dotenv()

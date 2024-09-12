@@ -1,5 +1,5 @@
 import chromadb
-from app.services.chroma_service import ChromaService
+from services.chroma_service import ChromaService
 
 # Инициализация Chroma сервиса
 chroma_service = ChromaService(collection_name="reviews_collection")

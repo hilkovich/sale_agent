@@ -1,6 +1,6 @@
-from app.services.chroma_service import ChromaService
-from app.services.gpt_service import GPTService
-from app.services.embedding_service import EmbeddingService
+from services.chroma_service import ChromaService
+from services.gpt_service import GPTService
+from services.embedding_service import EmbeddingService
 from langchain_community.embeddings.yandex import YandexGPTEmbeddings
 import os
 from dotenv import load_dotenv
