@@ -7,3 +7,6 @@ gen
 /data/
 *.json
 /review_embeddings.json
+*.pyc
+__pycache__/
+
