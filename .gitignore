@@ -2,6 +2,13 @@
 *.iml
 out
 gen
+/.venv/
+.env
+/data/
+*.json
+/review_embeddings.json
+*.pyc
+__pycache__/
 .env
 .venv
 env/
