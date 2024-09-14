@@ -5,7 +5,6 @@ from loguru import logger
 
 from utils.commands import set_commands
 from routes import ml, commands
-from database.database import db_init
 
 token = TG_Settings.TG_BOT_TOKEN
 
@@ -15,7 +14,6 @@ dp = Dispatcher()
 
 async def start():
     try:
-        db_init()
         logger.info("DB initialize completed")
         await set_commands(bot)
         logger.info("bot commands set")

@@ -1,16 +1,11 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
-from models.base import Base
-from models.user import User
-from models.data import Data
-from models.analytics import Analytics
-from config import DB_Settings
+import os
 
 
-url = DB_Settings.DATABASE_URL
-engine = create_engine(url)
-SessionLocal = sessionmaker(autoflush=False, bind=engine)
+DATABASE_URL = os.getenv("DATABASE_URL")
+engine = create_engine(DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 def get_db():
@@ -18,5 +13,10 @@ def get_db():
         return session
 
 
-def db_init():
-    Base.metadata.create_all(bind=engine)
+
+
+
+
+
+
+
