@@ -73,5 +73,5 @@ def load_reviews_from_csv(csv_file):
 
 
 # Пример использования
-csv_file_path = './data/data_s_fixed.csv'
+csv_file_path = 'app/artifacts/data_s_fixed.csv'
 load_reviews_from_csv(csv_file_path)
