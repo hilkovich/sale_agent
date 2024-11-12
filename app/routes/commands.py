@@ -5,6 +5,7 @@ from aiogram.filters.command import Command
 
 from services.user import user_add, get_user_by_tg
 from utils.states import ProcessLLMStates
+from utils.keyboards import get_common_questions_keyboard
 from database.database import get_db
 
 router = Router()
@@ -40,9 +41,9 @@ async def cmd_bot(message: Message, state: FSMContext):
     user = get_user_by_tg(session, message.from_user.id)
     if user is None:
         user_add(session, message.from_user.id)
-    msg = "Задайте свой вопрос или воспользуйтесь меню для консультации с менеджером"
-    await message.answer(msg)
-    await state.set_state(ProcessLLMStates.waitForText)
+    msg = "Задайте свой вопрос или выберите один из самых частых вопросов:"
+    await message.answer(msg, reply_markup=get_common_questions_keyboard())
+    await state.set_state(ProcessLLMStates.waitForCommonQuestion)
 
 
 @router.message(Command("call"))

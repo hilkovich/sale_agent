@@ -15,3 +15,13 @@ class TG_Settings:
 class GPT_Settings:
     YANDEX_KATALOG_ID: str = os.getenv("YANDEX_KATALOG_ID")
     YANDEX_API_KEY: str = os.getenv("YANDEX_API_KEY")
+
+
+class CommonQuestions:
+    QUESTION_ANSWERS: dict = {
+        "Задать свой вопрос": None,
+        "Вопрос 1": "Ответ на вопрос 1",
+        "Вопрос 2": "Ответ на вопрос 2",
+        "Вопрос 3": "Ответ на вопрос 3",
+        "Вопрос 4": "Ответ на вопрос 4",
+    }
