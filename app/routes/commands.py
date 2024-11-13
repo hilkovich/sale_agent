@@ -6,6 +6,7 @@ from aiogram.filters.command import Command
 from services.user import user_add, get_user_by_tg
 from services.data import save_user_action
 from utils.states import ProcessLLMStates
+from utils.keyboards import get_common_questions_keyboard
 from database.database import get_db
 from config import SystemTexts
 
