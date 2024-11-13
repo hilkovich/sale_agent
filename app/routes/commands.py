@@ -4,9 +4,11 @@ from aiogram.fsm.context import FSMContext
 from aiogram.filters.command import Command
 
 from services.user import user_add, get_user_by_tg
+from services.data import save_user_action
 from utils.states import ProcessLLMStates
 from utils.keyboards import get_common_questions_keyboard
 from database.database import get_db
+from config import SystemTexts
 
 router = Router()
 session = get_db()
@@ -17,33 +19,45 @@ async def cmd_start(message: Message, state: FSMContext):
     user = get_user_by_tg(session, message.from_user.id)
     if user is None:
         user_add(session, message.from_user.id)
-    msg = """
-    Вас приветствует компания Napoleon IT Отзывы!
-    Предлагаем ознакомится с нашим AI инструментом для анализа отзывов.
-    Мы поможем вам глубже понять мнения клиентов, предоставляя точные данные. 
-    Наша система выявляет тренды в позитивных и негативных отзывах, позволяя быстрее реагировать на изменения в настроениях.
-    Система - это централизованный сбор отзывов со всех источников и аналитические исследования. Вы сможете:
-    - Изучить выявленные тем и настроения клиентов
-    - Попробовать виджет сумаризации отзывов
-    - Оценить негативные и позитивные тренды
-    - Скачать операционные и стратегические отчеты
-    - Провести сравнение с конкурентами
-    - Получить систему алертов
-    - Воспользоваться генерацией rich контента
-    Благодаря этому боту вы можете потрогать все эти данные на своей компании. Аналитика содержит данные за последние 1 000 отзывов.
-    """
+    save_user_action(session, "start", user.id)
+    msg = SystemTexts.START_MESSAGE
     await message.answer(msg)
     await cmd_bot(message, state)
 
 
-@router.message(Command("bot"))
+@router.message(Command("feedback"))
+async def reviews_info(message: Message):
+    user = get_user_by_tg(session, message.from_user.id)
+    save_user_action(session, "feedback", user.id)
+    msg = SystemTexts.FEEDBACK_MESSAGE
+    await message.answer(msg)
+
+
+@router.message(Command("help"))
+async def widget_info(message: Message):
+    user = get_user_by_tg(session, message.from_user.id)
+    save_user_action(session, "help", user.id)
+    msg = SystemTexts.START_MESSAGE
+    await message.answer(msg)
+
+
+@router.message(Command("widget"))
+async def widget_info(message: Message):
+    user = get_user_by_tg(session, message.from_user.id)
+    save_user_action(session, "widget", user.id)
+    msg = SystemTexts.WIDGET_MESSAGE
+    await message.answer(msg)
+
+
+@router.message(Command("chat"))
 async def cmd_bot(message: Message, state: FSMContext):
     user = get_user_by_tg(session, message.from_user.id)
     if user is None:
         user_add(session, message.from_user.id)
-    msg = "Задайте свой вопрос или выберите один из самых частых вопросов:"
-    await message.answer(msg, reply_markup=get_common_questions_keyboard())
-    await state.set_state(ProcessLLMStates.waitForCommonQuestion)
+    save_user_action(session, "chat", user.id)
+    msg = SystemTexts.CHAT_MESSAGE
+    await message.answer(msg)
+    await state.set_state(ProcessLLMStates.waitForText)
 
 
 @router.message(Command("call"))
@@ -51,5 +65,6 @@ async def cmd_call(message: Message):
     user = get_user_by_tg(session, message.from_user.id)
     if user is None:
         user_add(session, message.from_user.id)
-    msg = "Для связи с менеджером пройдите по ссылке\n" "[телеграм]"
+    save_user_action(session, "call", user.id)
+    msg = SystemTexts.CONTACT_MESSAGE
     await message.answer(msg)

@@ -12,3 +12,12 @@ class Data(Base):
     request_date = Column(TIMESTAMP)
     input_data = Column(String)
     output_data = Column(String)
+
+
+class Action(Base):
+    __tablename__ = "user_actions"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("user_table.id"))
+    user = relationship(User, primaryjoin=user_id == User.id)
+    action_date = Column(TIMESTAMP)
+    action_type = Column(String)
