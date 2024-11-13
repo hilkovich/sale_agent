@@ -1,4 +1,4 @@
-from models.data import Data
+from models.data import Data, Action
 import datetime
 
 
@@ -21,5 +21,16 @@ def save_output_data(session, output_data, data_id, user_id):
         session.query(Data).filter(Data.user_id == user_id, Data.id == data_id).first()
     )
     data.output_data = output_data
+    session.commit()
+    session.close()
+
+
+def save_user_action(session, action_type, user_id):
+    curr_act = Action(
+        user_id=user_id,
+        action_date=datetime.datetime.now().strftime("%Y.%m.%d %H:%M:%S"),
+        action_type=action_type,
+    )
+    session.add(curr_act)
     session.commit()
     session.close()

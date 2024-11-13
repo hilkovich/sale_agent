@@ -7,7 +7,7 @@ async def set_commands(bot: Bot):
         BotCommand(command="start", description="Повторный запуск бота"),
         BotCommand(command="help", description="Посмотреть как пользоваться ботом"),
         BotCommand(
-            command="feedback", description="Узнать о продукте NapoleonIT-отзывы"
+            command="feedback", description="Узнать о продукте"
         ),
         BotCommand(command="widget", description="Узнать о виджете для вашего сайта"),
         BotCommand(command="chat", description="Задать вопрос боту"),
