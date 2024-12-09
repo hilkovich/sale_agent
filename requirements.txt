@@ -13,3 +13,5 @@ yandexcloud
 aiogram == 3.12.0
 python-dotenv == 1.0.1
 loguru == 0.7.2
+pandas
+openpyxl

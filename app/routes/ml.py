@@ -39,16 +39,40 @@ router = Router()
 session = get_db()
 
 
+# @router.message(ProcessLLMStates.waitForText)
+# async def request_generate(message: Message, state: FSMContext):
+#     user_text = message.text
+#     user = get_user_by_tg(session, message.from_user.id)
+#     data_id = save_input_data(user.id, user_text, session)
+#
+#     answer = review_query_service.generate_response_from_gpt(user_text)  #, {"company": company_name})
+#
+#     save_output_data(session, answer, data_id, user.id)
+#     await message.answer(answer)
+
+
 @router.message(ProcessLLMStates.waitForText)
 async def request_generate(message: Message, state: FSMContext):
     user_text = message.text
     user = get_user_by_tg(session, message.from_user.id)
+
+    # Получаем выбранную компанию из состояния
+    data = await state.get_data()
+    company_name = data.get("company_name")
+    if not company_name:
+        await message.answer("Ошибка: не выбрана компания. Попробуйте снова через /chat.")
+        return
+
+    # Сохраняем данные запроса
     data_id = save_input_data(user.id, user_text, session)
 
-    answer = review_query_service.generate_response_from_gpt(user_text)
+    # Генерируем ответ с учетом выбранной компании
+    answer = review_query_service.generate_response_from_gpt(user_text, {"company": company_name})
 
+    # Сохраняем ответ
     save_output_data(session, answer, data_id, user.id)
     await message.answer(answer)
+
 
 # Вызывает стандартную клавиатуру под строкой ввода (при замене зафди в utils/keybords.py)
 # @router.message(ProcessLLMStates.waitForCommonQuestion)
