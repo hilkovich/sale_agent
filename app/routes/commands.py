@@ -11,6 +11,7 @@ from aiogram.filters.command import Command
 from utils.texts import SystemTexts
 from utils.path import get_image_path
 from aiogram.types import FSInputFile
+from models import Company
 
 router = Router()
 session = get_db()
@@ -43,15 +44,59 @@ async def widget_info(message: Message):
     await message.answer(msg)
 
 
+# @router.message(Command("chat"))
+# async def cmd_bot(message: Message, state: FSMContext):
+#     user = get_user_by_tg(session, message.from_user.id)
+#     if user is None:
+#         user_add(session, message.from_user.id)
+#     save_user_action(session, "chat", user.id)
+#     msg = SystemTexts.CHAT_MESSAGE
+#     await message.answer(msg)
+#     await state.set_state(ProcessLLMStates.waitForText)
+
+
 @router.message(Command("chat"))
 async def cmd_bot(message: Message, state: FSMContext):
     user = get_user_by_tg(session, message.from_user.id)
     if user is None:
         user_add(session, message.from_user.id)
     save_user_action(session, "chat", user.id)
-    msg = SystemTexts.CHAT_MESSAGE
-    await message.answer(msg)
+
+    # Получаем список компаний
+    companies = session.query(Company).all()
+    if not companies:
+        await message.answer("Нет доступных компаний для выбора.")
+        return
+
+    # Генерируем инлайн-клавиатуру для выбора компании
+    keyboard = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text=company.name, callback_data=f"select_company_{company.id}")]
+            for company in companies
+        ]
+    )
+
+    await message.answer("Выберите компанию:", reply_markup=keyboard)
+
+
+@router.callback_query(lambda callback: callback.data.startswith("select_company_"))
+async def select_company(callback_query: CallbackQuery, state: FSMContext):
+    # Извлекаем ID компании из callback_data
+    company_id = callback_query.data.split("_")[-1]
+    selected_company = session.query(Company).filter_by(id=company_id).first()
+
+    if not selected_company:
+        await callback_query.answer("Компания не найдена. Попробуйте снова.", show_alert=True)
+        return
+
+    # Сохраняем выбранную компанию в состоянии
+    await state.update_data(company_name=selected_company.name)
+
+    await callback_query.message.answer(
+        f"Вы выбрали компанию: {selected_company.name}\nТеперь введите ваш вопрос."
+    )
     await state.set_state(ProcessLLMStates.waitForText)
+    await callback_query.answer()
 
 
 async def send_contact_info(message_or_query):

@@ -34,16 +34,36 @@ class ChromaService:
         )
         print(f"Добавлено {len(embeddings)} эмбеддингов в коллекцию {self.collection.name}")
 
-    def query_embeddings(self, query_embedding: List[float], n_results: int = 5):
-        """Поиск похожих эмбеддингов в Chroma."""
+    def query_embeddings(
+            self, query_embedding: List[float], n_results: int = 5, filter_metadata: dict = None
+    ):
+        """
+        Поиск похожих эмбеддингов в Chroma с опциональной фильтрацией по метаданным.
 
-        results = self.collection.query(
-            query_embeddings=[query_embedding],
-            n_results=n_results,
-            include=["documents", "embeddings", "metadatas", "distances"]
-        )
+        Args:
+            query_embedding (List[float]): Эмбеддинг запроса.
+            n_results (int): Количество результатов. По умолчанию 5.
+            filter_metadata (dict, optional): Словарь фильтров по метаданным.
 
-        return results
+        Returns:
+            dict: Результаты поиска с документами, эмбеддингами, метаданными и расстояниями.
+        """
+        try:
+            query_params = {
+                "query_embeddings": [query_embedding],
+                "n_results": n_results,
+                "include": ["documents", "embeddings", "metadatas", "distances"]
+            }
+
+            if filter_metadata:
+                query_params["where"] = filter_metadata
+
+            results = self.collection.query(**query_params)
+
+            return results
+        except Exception as e:
+            print(f"Ошибка при выполнении запроса к Chroma: {e}")
+            return None
 
     def check_collection(self, n_results=3):
         """Проверка, создалась ли коллекция и записаны ли эмбеддинги."""
