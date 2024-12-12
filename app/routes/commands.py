@@ -44,17 +44,6 @@ async def widget_info(message: Message):
     await message.answer(msg)
 
 
-# @router.message(Command("chat"))
-# async def cmd_bot(message: Message, state: FSMContext):
-#     user = get_user_by_tg(session, message.from_user.id)
-#     if user is None:
-#         user_add(session, message.from_user.id)
-#     save_user_action(session, "chat", user.id)
-#     msg = SystemTexts.CHAT_MESSAGE
-#     await message.answer(msg)
-#     await state.set_state(ProcessLLMStates.waitForText)
-
-
 @router.message(Command("chat"))
 async def cmd_bot(message: Message, state: FSMContext):
     user = get_user_by_tg(session, message.from_user.id)
@@ -79,7 +68,7 @@ async def cmd_bot(message: Message, state: FSMContext):
     await message.answer("Выберите компанию:", reply_markup=keyboard)
 
 
-@router.callback_query(lambda callback: callback.data.startswith("select_company_"))
+@router.callback_query(lambda c: c.data.startswith("select_company_"))
 async def select_company(callback_query: CallbackQuery, state: FSMContext):
     # Извлекаем ID компании из callback_data
     company_id = callback_query.data.split("_")[-1]
@@ -136,7 +125,7 @@ async def cmd_widget(message: Message):
                     text="Презентация Виджет", callback_data="presentation_widget"
                 ),
             ],
-            [InlineKeyboardButton(text="Пощупать аналитику", callback_data="analytics_demo")],
+            [InlineKeyboardButton(text="Посмотреть аналитику", callback_data="analytics_demo")],
         ]
     )
     await message.answer("Выберите действие:", reply_markup=keyboard)
@@ -222,13 +211,13 @@ async def interactive_feedback_steps(callback_query: CallbackQuery):
                         ]
                     ]
                 )
-                await callback_query.message.answer("Продолжим?", reply_markup=keyboard)
+                await callback_query.message.answer(text="Нажмите 'Продолжить'", reply_markup=keyboard)
             else:
                 keyboard = InlineKeyboardMarkup(
                     inline_keyboard=[
                         [
                             InlineKeyboardButton(text="Изучить кейсы", callback_data="case_studies"),
-                            InlineKeyboardButton(text="Пощупать аналитику", callback_data="analytics_demo"),
+                            InlineKeyboardButton(text="Посмотреть аналитику", callback_data="analytics_demo"),
                         ],
                         [InlineKeyboardButton(text="Связаться с менеджером", callback_data="call_manager")],
                     ]

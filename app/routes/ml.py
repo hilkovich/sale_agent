@@ -39,18 +39,6 @@ router = Router()
 session = get_db()
 
 
-# @router.message(ProcessLLMStates.waitForText)
-# async def request_generate(message: Message, state: FSMContext):
-#     user_text = message.text
-#     user = get_user_by_tg(session, message.from_user.id)
-#     data_id = save_input_data(user.id, user_text, session)
-#
-#     answer = review_query_service.generate_response_from_gpt(user_text)  #, {"company": company_name})
-#
-#     save_output_data(session, answer, data_id, user.id)
-#     await message.answer(answer)
-
-
 @router.message(ProcessLLMStates.waitForText)
 async def request_generate(message: Message, state: FSMContext):
     user_text = message.text
@@ -60,36 +48,25 @@ async def request_generate(message: Message, state: FSMContext):
     data = await state.get_data()
     company_name = data.get("company_name")
     if not company_name:
-        await message.answer("Ошибка: не выбрана компания. Попробуйте снова через /chat.")
+        await message.answer(
+            "Ошибка: не выбрана компания. Попробуйте снова через /chat."
+        )
         return
 
     # Сохраняем данные запроса
     data_id = save_input_data(user.id, user_text, session)
 
     # Генерируем ответ с учетом выбранной компании
-    answer = review_query_service.generate_response_from_gpt(user_text, {"company": company_name})
+    answer = review_query_service.generate_response_from_gpt(
+        user_text, {"company": company_name}
+    )
 
     # Сохраняем ответ
     save_output_data(session, answer, data_id, user.id)
     await message.answer(answer)
 
 
-# Вызывает стандартную клавиатуру под строкой ввода (при замене зафди в utils/keybords.py)
-# @router.message(ProcessLLMStates.waitForCommonQuestion)
-# async def process_common_question(message: Message, state: FSMContext):
-#     if message.text == "Задать свой вопрос":
-#         await message.answer("Задайте свой вопрос:")
-#         await state.set_state(ProcessLLMStates.waitForText)
-#     else:
-#         answer = CommonQuestions.QUESTION_ANSWERS.get(message.text)
-#         await message.answer(
-#             f"Ответ: {answer}",
-#             reply_markup=get_common_questions_keyboard(),
-#         )
-#         await state.set_state(ProcessLLMStates.waitForCommonQuestion)
-
-
-# Вызывает инлайн клавиатуру в поле чата (при замене зафди в utils/keybords.py)
+# Вызывает инлайн клавиатуру в поле чата 
 @router.callback_query(ProcessLLMStates.waitForCommonQuestion)
 async def process_common_question(callback_query: CallbackQuery, state: FSMContext):
     selected_question = callback_query.data
