@@ -12,7 +12,7 @@ from services.embedding_service import EmbeddingService
 from services.chroma_service import ChromaService
 from services.gpt_service import GPTService
 from services.review_query_service import ReviewQueryService
-from utils.keyboards import get_common_questions_keyboard
+from utils.keyboards import inline_keyboards
 from config import CommonQuestions
 from dotenv import load_dotenv
 import os
@@ -66,7 +66,7 @@ async def request_generate(message: Message, state: FSMContext):
     await message.answer(answer)
 
 
-# Вызывает инлайн клавиатуру в поле чата 
+# Вызывает инлайн клавиатуру в поле чата
 @router.callback_query(ProcessLLMStates.waitForCommonQuestion)
 async def process_common_question(callback_query: CallbackQuery, state: FSMContext):
     selected_question = callback_query.data
@@ -77,7 +77,7 @@ async def process_common_question(callback_query: CallbackQuery, state: FSMConte
         answer = CommonQuestions.QUESTION_ANSWERS.get(selected_question)
         if answer:
             await callback_query.message.answer(
-                f"Ответ: {answer}", reply_markup=get_common_questions_keyboard()
+                f"Ответ: {answer}", reply_markup=inline_keyboards.common_questions()
             )
         await callback_query.message.delete_reply_markup()
         await state.set_state(ProcessLLMStates.waitForCommonQuestion)
