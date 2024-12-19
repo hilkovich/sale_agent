@@ -64,7 +64,6 @@ async def init_chat(message_or_query):
         return
 
     if isinstance(message_or_query, CallbackQuery):
-        await message_or_query.message.delete_reply_markup()  # Если вызвано через кнопку
         message_or_query = message_or_query.message
 
     await message_or_query.answer(
@@ -86,7 +85,7 @@ async def select_company(callback_query: CallbackQuery, state: FSMContext):
 
     # Сохраняем выбранную компанию в состоянии
     await state.update_data(company_name=selected_company.name)
-    await callback_query.message.delete_reply_markup()
+    
     await callback_query.message.answer(f"Вы выбрали компанию: {selected_company.name}")
     await callback_query.message.answer("Задайте вопрос помощнику")
     await state.set_state(ProcessLLMStates.waitForText)
@@ -110,7 +109,7 @@ async def send_contact_info(message_or_query):
 
     msg = SystemTexts.CONTACT_MANAGER
     if isinstance(message_or_query, CallbackQuery):  # Если вызвано через кнопку
-        await message_or_query.message.delete_reply_markup()
+        
         message_or_query = message_or_query.message
 
     await message_or_query.answer(msg)
@@ -130,7 +129,7 @@ async def widget_info(message_or_query):
     user = get_user_by_tg(session, message_or_query.from_user.id)
     save_user_action(session, "widget", user.id)
     if isinstance(message_or_query, CallbackQuery):  # Если вызвано через кнопку
-        await message_or_query.message.delete_reply_markup()
+        
         message_or_query = message_or_query.message
 
     image_path = get_image_path("image_9.png")
@@ -143,7 +142,7 @@ async def widget_info(message_or_query):
 
 @router.callback_query(lambda c: c.data == "case_studies")
 async def case_studies(callback_query: CallbackQuery):
-    await callback_query.message.delete_reply_markup()
+    
     await callback_query.message.answer(
         SystemTexts.CASE_STUDIES_INTRO, reply_markup=inline_keyboards.cases()
     )
@@ -156,7 +155,7 @@ async def specific_case(callback_query: CallbackQuery):
     image_2_path = get_image_path("2.jpg", f"widget/{case_name}")
     photo_1 = FSInputFile(image_1_path)
     photo_2 = FSInputFile(image_2_path)
-    await callback_query.message.delete_reply_markup()
+    
     await callback_query.message.answer_photo(photo=photo_1)
     await callback_query.message.answer_photo(
         photo=photo_2,
@@ -171,7 +170,7 @@ async def reviews_info(message: Message):
 
 @router.callback_query(lambda c: c.data == "presentation_feedback")
 async def presentation_feedback(callback_query: CallbackQuery):
-    await callback_query.message.delete_reply_markup()
+    
     await feedback_info(callback_query)
 
 
@@ -193,7 +192,7 @@ async def feedback_info(message_or_query):
 async def download_feedback(callback_query: CallbackQuery):
     pdf_path = get_image_path("Презентация_Napoleon_IT_Отзывы.pdf")
     pdf_file = FSInputFile(pdf_path)
-    await callback_query.message.delete_reply_markup()
+    
     await callback_query.message.answer_document(pdf_file)
     await callback_query.answer()
 
@@ -203,7 +202,7 @@ async def interactive_feedback_start(callback_query: CallbackQuery):
     image_path = get_image_path("image_1.png")
     photo = FSInputFile(image_path)
 
-    await callback_query.message.delete_reply_markup()
+    
     await callback_query.message.answer(SystemTexts.INTERACTIVE_FEEDBACK_START_MESSAGE)
     await callback_query.message.answer_photo(photo=photo)
     await callback_query.message.answer(
@@ -214,7 +213,7 @@ async def interactive_feedback_start(callback_query: CallbackQuery):
 
 @router.callback_query(lambda c: c.data.startswith("feedback_step_"))
 async def interactive_feedback_steps(callback_query: CallbackQuery):
-    await callback_query.message.delete_reply_markup()
+    
     steps = [
         (
             "feedback_step_1",

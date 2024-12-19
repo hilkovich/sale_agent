@@ -51,8 +51,8 @@ class Keyboards:
                         text="Изучить кейсы", callback_data="case_studies"
                     ),
                     InlineKeyboardButton(
-                        text="Посмотреть аналитику",
-                        callback_data="analytics_demo",
+                        text="Задать вопрос помощнику",
+                        callback_data="chat",
                     ),
                 ],
                 [
@@ -111,20 +111,24 @@ class Keyboards:
 
     def cases():
         buttons = [
-            [InlineKeyboardButton(text="Бренд одежды", callback_data="case_od")],
-            [InlineKeyboardButton(text="Ватная продукция", callback_data="case_vt")],
-            [InlineKeyboardButton(text="Натуральные лимонады", callback_data="case_li")],
-            [InlineKeyboardButton(text="Магазин косметики", callback_data="case_ko")],
+            [InlineKeyboardButton(text="Кейс: Бренд одежды", callback_data="case_od")],
+            [InlineKeyboardButton(text="Кейс: Ватная продукция", callback_data="case_vt")],
+            [
+                InlineKeyboardButton(
+                    text="Кейс: Натуральные лимонады", callback_data="case_li"
+                )
+            ],
+            [InlineKeyboardButton(text="Кейс: Магазин косметики", callback_data="case_ko")],
         ]
         keyboard = InlineKeyboardMarkup(inline_keyboard=buttons)
         return keyboard
 
     def cases_after_pressing(pressed_button):
         buttons = [
-            InlineKeyboardButton(text="Бренд одежды", callback_data="case_od"),
-            InlineKeyboardButton(text="Ватная продукция", callback_data="case_vt"),
-            InlineKeyboardButton(text="Натуральные лимонады", callback_data="case_li"),
-            InlineKeyboardButton(text="Магазин косметики", callback_data="case_ko"),
+            InlineKeyboardButton(text="Кейс: Бренд одежды", callback_data="case_od"),
+            InlineKeyboardButton(text="Кейс: Ватная продукция", callback_data="case_vt"),
+            InlineKeyboardButton(text="Кейс: Натуральные лимонады", callback_data="case_li"),
+            InlineKeyboardButton(text="Кейс: Магазин косметики", callback_data="case_ko"),
             InlineKeyboardButton(
                 text="Связаться с менеджером",
                 callback_data="call_manager",

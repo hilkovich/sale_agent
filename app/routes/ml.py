@@ -79,5 +79,5 @@ async def process_common_question(callback_query: CallbackQuery, state: FSMConte
             await callback_query.message.answer(
                 f"Ответ: {answer}", reply_markup=inline_keyboards.common_questions()
             )
-        await callback_query.message.delete_reply_markup()
+        
         await state.set_state(ProcessLLMStates.waitForCommonQuestion)

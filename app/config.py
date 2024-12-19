@@ -25,3 +25,12 @@ class CommonQuestions:
         "Вопрос 3": "Ответ на вопрос 3",
         "Вопрос 4": "Ответ на вопрос 4",
     }
+
+
+class DataRoutes:
+    XLS_ROUTES: list = [
+        "app/artifacts/akbars.xlsx",
+        "app/artifacts/deppa.xlsx",
+        "app/artifacts/rostics.xlsx",
+    ]
+    CSV_ROUTES: list = ["app/artifacts/data_s_fixed.csv"]
