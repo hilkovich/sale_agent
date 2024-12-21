@@ -13,6 +13,7 @@ from services.chroma_service import ChromaService
 from services.gpt_service import GPTService
 from services.review_query_service import ReviewQueryService
 from utils.keyboards import inline_keyboards
+from utils.texts import SystemMessages
 from config import CommonQuestions
 from dotenv import load_dotenv
 import os
@@ -71,13 +72,13 @@ async def request_generate(message: Message, state: FSMContext):
 async def process_common_question(callback_query: CallbackQuery, state: FSMContext):
     selected_question = callback_query.data
     if selected_question == "Задать свой вопрос":
-        await callback_query.message.answer("Задайте свой вопрос:")
+        await callback_query.message.answer(SystemMessages.QUESTION_ASKING)
         await state.set_state(ProcessLLMStates.waitForText)
     else:
         answer = CommonQuestions.QUESTION_ANSWERS.get(selected_question)
         if answer:
             await callback_query.message.answer(
-                f"Ответ: {answer}", reply_markup=inline_keyboards.common_questions()
+                answer, reply_markup=inline_keyboards.common_questions()
             )
-        
+
         await state.set_state(ProcessLLMStates.waitForCommonQuestion)

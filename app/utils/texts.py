@@ -120,3 +120,38 @@ r.sokolov@napoleonit.ru
         """
 
     WIDGET_INTRO = "Представляем виджет суммаризации отзывов"
+
+
+class SystemMessages:
+    NO_COMPANIES = "Нет доступных компаний для выбора."
+    CHOOSE_COMPANY = "Выберите компанию:"
+    CHOSEN_COMPANY = "Вы выбрали компанию: "
+    CANT_FOUND_COMPANY = "Компания не найдена. Попробуйте снова."
+    QUESTION_ASKING = "Задайте вопрос помощнику:"
+    END_MESSAGE = "На этом все. Что вы хотите сделать дальше?"
+
+
+class ButtonsTexts:
+    FEEDBACK_PRESENTATION = "Презентация Отзывы"
+    WIDGET_PRESENTATION = "Презентация Виджет"
+    QUESTION_ASKING = "Задать вопрос помощнику"
+    NEXT_STEP = "Продолжить"
+    VIEW_CASES = "Изучить кейсы"
+    CALL_MANAGER = "Связаться с менеджером"
+    DOWNLOAD_PRESENTATION = "Скачать презентацию"
+    INTERACTIVE_PRESENTATION = "Интерактивная презентация"
+
+    # cases
+    CASE_OD = "Кейс: Бренд одежды"
+    CASE_VT = "Кейс: Ватная продукция"
+    CASE_LI = "Кейс: Натуральные лимонады"
+    CASE_KO = "Кейс: Магазин косметики"
+
+
+class CommandsTexts:
+    START = "Повторный запуск бота"
+    HELP = "Как пользоваться ботом"
+    FEEDBACK = "Узнать о продукте Отзывы"
+    WIDGET = "Узнать о продукте Виджет"
+    CHAT = "Задать вопрос помощнику"
+    CALL = "Связаться с менеджером"

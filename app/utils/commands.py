@@ -1,15 +1,16 @@
 from aiogram import Bot
 from aiogram.types import BotCommand, BotCommandScopeDefault
+from utils.texts import CommandsTexts
 
 
 async def set_commands(bot: Bot):
     commands = [
-        BotCommand(command="start", description="Повторный запуск бота"),
-        BotCommand(command="help", description="Как пользоваться ботом"),
-        BotCommand(command="feedback", description="Узнать о продукте Отзывы"),
-        BotCommand(command="widget", description="Узнать о продукте Виджет"),
-        BotCommand(command="chat", description="Задать вопрос помощнику"),
-        BotCommand(command="call", description="Связаться с менеджером"),
+        BotCommand(command="start", description=CommandsTexts.START),
+        BotCommand(command="help", description=CommandsTexts.HELP),
+        BotCommand(command="feedback", description=CommandsTexts.FEEDBACK),
+        BotCommand(command="widget", description=CommandsTexts.WIDGET),
+        BotCommand(command="chat", description=CommandsTexts.CHAT),
+        BotCommand(command="call", description=CommandsTexts.CALL),
     ]
 
     await bot.set_my_commands(commands, BotCommandScopeDefault())

@@ -2,6 +2,7 @@ from aiogram.types import (
     InlineKeyboardMarkup,
     InlineKeyboardButton,
 )
+from utils.texts import ButtonsTexts
 from config import CommonQuestions
 
 
@@ -20,15 +21,17 @@ class Keyboards:
             inline_keyboard=[
                 [
                     InlineKeyboardButton(
-                        text="Презентация Отзывы", callback_data="presentation_feedback"
+                        text=ButtonsTexts.FEEDBACK_PRESENTATION,
+                        callback_data="presentation_feedback",
                     ),
                     InlineKeyboardButton(
-                        text="Презентация Виджет", callback_data="presentation_widget"
+                        text=ButtonsTexts.WIDGET_PRESENTATION,
+                        callback_data="presentation_widget",
                     ),
                 ],
                 [
                     InlineKeyboardButton(
-                        text="Задать вопрос помощнику", callback_data="chat"
+                        text=ButtonsTexts.QUESTION_ASKING, callback_data="chat"
                     )
                 ],
             ]
@@ -38,7 +41,11 @@ class Keyboards:
     def next_step(next_step):
         keyboard = InlineKeyboardMarkup(
             inline_keyboard=[
-                [InlineKeyboardButton(text="Продолжить", callback_data=next_step)]
+                [
+                    InlineKeyboardButton(
+                        text=ButtonsTexts.NEXT_STEP, callback_data=next_step
+                    )
+                ]
             ]
         )
         return keyboard
@@ -48,16 +55,16 @@ class Keyboards:
             inline_keyboard=[
                 [
                     InlineKeyboardButton(
-                        text="Изучить кейсы", callback_data="case_studies"
+                        text=ButtonsTexts.VIEW_CASES, callback_data="case_studies"
                     ),
                     InlineKeyboardButton(
-                        text="Задать вопрос помощнику",
+                        text=ButtonsTexts.QUESTION_ASKING,
                         callback_data="chat",
                     ),
                 ],
                 [
                     InlineKeyboardButton(
-                        text="Связаться с менеджером",
+                        text=ButtonsTexts.CALL_MANAGER,
                         callback_data="call_manager",
                     )
                 ],
@@ -70,7 +77,7 @@ class Keyboards:
             inline_keyboard=[
                 [
                     InlineKeyboardButton(
-                        text="Связаться с менеджером",
+                        text=ButtonsTexts.CALL_MANAGER,
                         callback_data="call_manager",
                     )
                 ],
@@ -83,10 +90,11 @@ class Keyboards:
             inline_keyboard=[
                 [
                     InlineKeyboardButton(
-                        text="Продолжить", callback_data="feedback_step_1"
+                        text=ButtonsTexts.NEXT_STEP, callback_data="feedback_step_1"
                     ),
                     InlineKeyboardButton(
-                        text="Скачать презентацию", callback_data="download_feedback"
+                        text=ButtonsTexts.DOWNLOAD_PRESENTATION,
+                        callback_data="download_feedback",
                     ),
                 ]
             ]
@@ -98,11 +106,12 @@ class Keyboards:
             inline_keyboard=[
                 [
                     InlineKeyboardButton(
-                        text="Интерактивная презентация",
+                        text=ButtonsTexts.INTERACTIVE_PRESENTATION,
                         callback_data="interactive_feedback_start",
                     ),
                     InlineKeyboardButton(
-                        text="Скачать презентацию", callback_data="download_feedback"
+                        text=ButtonsTexts.CALL_MANAGER,
+                        callback_data="download_feedback",
                     ),
                 ]
             ]
@@ -111,29 +120,27 @@ class Keyboards:
 
     def cases():
         buttons = [
-            [InlineKeyboardButton(text="Кейс: Бренд одежды", callback_data="case_od")],
-            [InlineKeyboardButton(text="Кейс: Ватная продукция", callback_data="case_vt")],
-            [
-                InlineKeyboardButton(
-                    text="Кейс: Натуральные лимонады", callback_data="case_li"
-                )
-            ],
-            [InlineKeyboardButton(text="Кейс: Магазин косметики", callback_data="case_ko")],
+            [InlineKeyboardButton(text=ButtonsTexts.CASE_OD, callback_data="case_od")],
+            [InlineKeyboardButton(text=ButtonsTexts.CASE_VT, callback_data="case_vt")],
+            [InlineKeyboardButton(text=ButtonsTexts.CASE_LI, callback_data="case_li")],
+            [InlineKeyboardButton(text=ButtonsTexts.CASE_KO, callback_data="case_ko")],
         ]
         keyboard = InlineKeyboardMarkup(inline_keyboard=buttons)
         return keyboard
 
     def cases_after_pressing(pressed_button):
         buttons = [
-            InlineKeyboardButton(text="Кейс: Бренд одежды", callback_data="case_od"),
-            InlineKeyboardButton(text="Кейс: Ватная продукция", callback_data="case_vt"),
-            InlineKeyboardButton(text="Кейс: Натуральные лимонады", callback_data="case_li"),
-            InlineKeyboardButton(text="Кейс: Магазин косметики", callback_data="case_ko"),
+            InlineKeyboardButton(text=ButtonsTexts.CASE_OD, callback_data="case_od"),
+            InlineKeyboardButton(text=ButtonsTexts.CASE_VT, callback_data="case_vt"),
+            InlineKeyboardButton(text=ButtonsTexts.CASE_LI, callback_data="case_li"),
+            InlineKeyboardButton(text=ButtonsTexts.CASE_KO, callback_data="case_ko"),
             InlineKeyboardButton(
-                text="Связаться с менеджером",
+                text=ButtonsTexts.CALL_MANAGER,
                 callback_data="call_manager",
             ),
-            InlineKeyboardButton(text="Задать вопрос помощнику", callback_data="chat"),
+            InlineKeyboardButton(
+                text=ButtonsTexts.QUESTION_ASKING, callback_data="chat"
+            ),
         ]
         remaining_buttons = [
             [btn] for btn in buttons if btn.callback_data != pressed_button
