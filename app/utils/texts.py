@@ -129,6 +129,7 @@ class SystemMessages:
     CANT_FOUND_COMPANY = "Компания не найдена. Попробуйте снова."
     QUESTION_ASKING = "Задайте вопрос помощнику:"
     END_MESSAGE = "На этом все. Что вы хотите сделать дальше?"
+    THERE_IS_NO_COMPANY = "Ошибка: не выбрана компания. Попробуйте снова через /chat."
 
 
 class ButtonsTexts:

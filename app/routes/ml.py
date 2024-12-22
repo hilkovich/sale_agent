@@ -14,22 +14,17 @@ from services.gpt_service import GPTService
 from services.review_query_service import ReviewQueryService
 from utils.keyboards import inline_keyboards
 from utils.texts import SystemMessages
-from config import CommonQuestions
-from dotenv import load_dotenv
-import os
+from config import CommonQuestions, GPT_Settings
 
-
-load_dotenv()
-YANDEX_API_KEY = os.getenv("YANDEX_API_KEY")
-YANDEX_KATALOG_ID = os.getenv("YANDEX_KATALOG_ID")
-CHROMA_DB_PATH = "./app/data/chroma_data"
 
 # Инициализация сервисов
 embedding_service = EmbeddingService(
-    api_key=YANDEX_API_KEY, folder_id=YANDEX_KATALOG_ID
+    api_key=GPT_Settings.YANDEX_API_KEY, folder_id=GPT_Settings.YANDEX_KATALOG_ID
 )
 chroma_service = ChromaService(collection_name="reviews_collection")
-gpt_service = GPTService(api_key=YANDEX_API_KEY, folder_id=YANDEX_KATALOG_ID)
+gpt_service = GPTService(
+    api_key=GPT_Settings.YANDEX_API_KEY, folder_id=GPT_Settings.YANDEX_KATALOG_ID
+)
 
 # Сервис для обработки запросов
 review_query_service = ReviewQueryService(
@@ -49,9 +44,7 @@ async def request_generate(message: Message, state: FSMContext):
     data = await state.get_data()
     company_name = data.get("company_name")
     if not company_name:
-        await message.answer(
-            "Ошибка: не выбрана компания. Попробуйте снова через /chat."
-        )
+        await message.answer(SystemMessages.THERE_IS_NO_COMPANY)
         return
 
     # Сохраняем данные запроса

@@ -17,18 +17,26 @@ class GPTService:
         """
 
         # Извлекаем документы и метаданные
-        documents = chroma_results.get('documents', [[]])[0]  # Получаем список документов
-        metadatas = chroma_results.get('metadatas', [[]])[0]  # Получаем список метаданных
+        documents = chroma_results.get("documents", [[]])[
+            0
+        ]  # Получаем список документов
+        metadatas = chroma_results.get("metadatas", [[]])[
+            0
+        ]  # Получаем список метаданных
 
         # Проверяем, что есть данные для работы
         if not documents or not metadatas:
             return "Не удалось найти релевантные отзывы для данного запроса."
 
         # Формируем текст отзывов
-        review_texts = "\n".join([
-            f"Отзыв: {doc}\nПродукт: {meta['product']}\nКатегория: {meta['category']}\nСентимент: {meta['sentiment']}\nТемы: {meta['topics']}"
-            for doc, meta in zip(documents, metadatas)  # Соединяем каждый документ с его метаданными
-        ])
+        review_texts = "\n".join(
+            [
+                f"Отзыв: {doc}\nПродукт: {meta['product']}\nКатегория: {meta['category']}\nСентимент: {meta['sentiment']}\nТемы: {meta['topics']}"
+                for doc, meta in zip(
+                    documents, metadatas
+                )  # Соединяем каждый документ с его метаданными
+            ]
+        )
 
         # Промпт
         prompt_template = """
@@ -46,17 +54,13 @@ class GPTService:
         """
 
         template = PromptTemplate(
-            input_variables=["reviews", "query"],
-            template=prompt_template
+            input_variables=["reviews", "query"], template=prompt_template
         )
 
         # Создаем цепочку для выполнения запроса в LLM
         llm_chain = LLMChain(prompt=template, llm=self.llm)
 
         # Получаем ответ от GPT
-        response = llm_chain.run({
-            "reviews": review_texts,
-            "query": query
-        })
+        response = llm_chain.run({"reviews": review_texts, "query": query})
 
         return response

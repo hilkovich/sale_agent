@@ -7,7 +7,7 @@ from models import (
     Marketplace,
     review_topic_table,
 )
-from config import DataRoutes
+from config import DataRoutes, DB_Settings
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 import csv
@@ -31,7 +31,7 @@ def get_or_create(session, model, defaults=None, **kwargs):
 
 # Функция для загрузки CSV
 def load_reviews_from_csv(csv_file: str):
-    engine = create_engine("postgresql://postgres:postgres@db:5432/reviews")
+    engine = create_engine(DB_Settings.REVIEWS_DATABASE_URL)
     Session = sessionmaker(bind=engine)
     session = Session()
 
