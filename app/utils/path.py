@@ -11,4 +11,3 @@ def get_image_path(image_name: str, dir_name="widget") -> str:
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     images_dir = os.path.join("/app", "data", dir_name)
     return os.path.join(images_dir, image_name)
-

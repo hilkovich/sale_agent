@@ -1,4 +1,3 @@
-import chromadb
 from services.chroma_service import ChromaService
 
 # Инициализация Chroma сервиса
@@ -13,7 +12,9 @@ def check_collection(n_results=3):
 
         # Проверяем количество записей в коллекции
         embeddings_count = collection.count()
-        print(f"Количество эмбеддингов в коллекции 'reviews_collection': {embeddings_count}")
+        print(
+            f"Количество эмбеддингов в коллекции 'reviews_collection': {embeddings_count}"
+        )
 
         if embeddings_count > 0:
             # Создаём фиктивный запрос, чтобы получить любые первые результаты
@@ -23,13 +24,13 @@ def check_collection(n_results=3):
             results = collection.query(
                 query_embeddings=[fake_query_embedding],
                 n_results=n_results,
-                include=["documents", "embeddings", "metadatas", "distances"]
+                include=["documents", "embeddings", "metadatas", "distances"],
             )
 
             # Проверяем, что результат содержит данные
-            if results and 'documents' in results and len(results['documents']) > 0:
+            if results and "documents" in results and len(results["documents"]) > 0:
                 print("Первые эмбеддинги в коллекции:")
-                for i in range(len(results['documents'])):
+                for i in range(len(results["documents"])):
                     print(
                         f"Эмбеддинг {i + 1}:\nДокумент: {results['documents'][i]}\nМетаданные: {results['metadatas'][i]}\nЭмбеддинг: {results['embeddings'][i]}\n"
                     )

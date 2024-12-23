@@ -17,32 +17,37 @@ def get_reviews_for_embedding(session):
         product_name = review.product.name
         product_category = review.product.category.name
         company_name = review.product.company.name
-        sentiment = review.sentiment.name if isinstance(review.sentiment,
-                                                        SentimentEnum) else review.sentiment  # Преобразование SentimentEnum
-        review_date = review.review_date.strftime('%Y-%m-%d')
-        topics = ', '.join([topic.name for topic in review.topics])
+        sentiment = (
+            review.sentiment.name
+            if isinstance(review.sentiment, SentimentEnum)
+            else review.sentiment
+        )  # Преобразование SentimentEnum
+        review_date = review.review_date.strftime("%Y-%m-%d")
+        topics = ", ".join([topic.name for topic in review.topics])
 
         # Объединяем текст и метаданные
         combined_text = f"{product_name} | {company_name} | {product_category} | {sentiment} | {review_text} | {review_date} | Topics: {topics}"
 
         # Формируем структуру для дальнейшей работы
-        review_data.append({
-            'id': review.id,
-            'combined_text': combined_text,
-            'metadata': {
-                'product': product_name,
-                'category': product_category,
-                'company': company_name,
-                'date': review_date,
-                'sentiment': sentiment,
-                'topics': topics
+        review_data.append(
+            {
+                "id": review.id,
+                "combined_text": combined_text,
+                "metadata": {
+                    "product": product_name,
+                    "category": product_category,
+                    "company": company_name,
+                    "date": review_date,
+                    "sentiment": sentiment,
+                    "topics": topics,
+                },
             }
-        })
+        )
 
     return review_data
 
 
-def get_or_create(session, model, defaults=None, **kwargs):  #FIXME
+def get_or_create(session, model, defaults=None, **kwargs):  # FIXME
     instance = session.query(model).filter_by(**kwargs).first()
     if instance:
         return instance
@@ -58,25 +63,27 @@ def get_or_create(session, model, defaults=None, **kwargs):  #FIXME
 
 def add_review(session: Session, review_data: dict):
     """Добавляет отзыв в базу данных."""
-    product = get_or_create(session, Product, name=review_data['product_name'])
-    company = get_or_create(session, Company, name=review_data['company_name'])
-    marketplace = get_or_create(session, Marketplace, name=review_data['marketplace_name'])
+    product = get_or_create(session, Product, name=review_data["product_name"])
+    company = get_or_create(session, Company, name=review_data["company_name"])
+    marketplace = get_or_create(
+        session, Marketplace, name=review_data["marketplace_name"]
+    )
 
     # Создаем новый отзыв
     review = Review(
-        text=review_data['review_text'],
-        review_date=review_data['review_date'],
+        text=review_data["review_text"],
+        review_date=review_data["review_date"],
         product_id=product.id,
         company_id=company.id,
         marketplace_id=marketplace.id,
-        sentiment=review_data['sentiment']
+        sentiment=review_data["sentiment"],
     )
 
     session.add(review)
     session.commit()
 
     # Добавляем топики
-    for topic_name in review_data['topics']:
+    for topic_name in review_data["topics"]:
         topic = get_or_create(session, Topic, name=topic_name)
         review.topics.append(topic)
 

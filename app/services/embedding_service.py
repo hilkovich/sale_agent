@@ -16,7 +16,7 @@ class EmbeddingService:
     def vectorize_reviews(self, session: Session):
         """Векторизация всех отзывов."""
         reviews = get_reviews_for_embedding(session)
-        review_texts = [review['combined_text'] for review in reviews]
+        review_texts = [review["combined_text"] for review in reviews]
 
         # Векторизация текстов отзывов через Yandex GPT Embeddings
         review_vectors = []
