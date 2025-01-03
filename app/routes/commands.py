@@ -23,6 +23,7 @@ async def cmd_start(message: Message):
     user = get_user_by_tg(session, message.from_user.id)
     if user is None:
         user_add(session, message.from_user.id)
+        user = get_user_by_tg(session, message.from_user.id)
     save_user_action(session, "start", user.id)
     await message.answer(SystemTexts.START_MESSAGE_1)
     await message.answer(SystemTexts.START_MESSAGE_2)
