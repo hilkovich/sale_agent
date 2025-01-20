@@ -7,5 +7,5 @@ from .review import Review, review_topic_table
 from .topic import Topic
 
 from .user import User
-from .data import Data
+from .data import Data, Action
 from .analytics import Analytics
