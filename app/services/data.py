@@ -1,5 +1,6 @@
 from models.data import Data, Action
 import datetime
+import json
 
 
 def save_input_data(user_id, input_data: str, session):
@@ -20,7 +21,7 @@ def save_output_data(session, output_data, data_id, user_id):
     data = (
         session.query(Data).filter(Data.user_id == user_id, Data.id == data_id).first()
     )
-    data.output_data = output_data
+    data.output_data = json.dumps(output_data)
     session.commit()
     session.close()
 
